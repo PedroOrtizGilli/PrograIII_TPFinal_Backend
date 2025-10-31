@@ -15,9 +15,9 @@ app.listen(PORT, () => {
 })
 
 //Traemos todos los productos
-app.get("/products", async (req, res) => {
+app.get("/productos", async (req, res) => {
     try {
-        const sql = "SELECT * from producto"
+        const sql = "SELECT * from productos"
         //Con rows extraemos explicitamente los datos que pedimos en la consulta
         const [rows] = await connection.query(sql);
         console.log(rows);
