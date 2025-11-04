@@ -42,19 +42,19 @@ app.get("/", (req, res) => {
 // Estas rutas ahora apuntan a la subcarpeta 'views' dentro de 5_tpIntegradorFront.
 
 app.get("/cargar.html", (req, res) => {
-    res.sendFile(path.join(__dirname, '..', '5_tpIntegradorFront', 'views', 'cargar.html'));
+    res.sendFile(path.join(__dirname, '..', '5_tpIntegradorFront', 'views', 'admin', 'cargar.html'));
 });
 
 app.get("/buscar.html", (req, res) => {
-    res.sendFile(path.join(__dirname, '..', '5_tpIntegradorFront', 'views', 'buscar.html'));
+    res.sendFile(path.join(__dirname, '..', '5_tpIntegradorFront', 'views', 'admin', 'buscar.html'));
 });
 
 app.get("/modificar.html", (req, res) => {
-    res.sendFile(path.join(__dirname, '..', '5_tpIntegradorFront', 'views', 'modificar.html'));
+    res.sendFile(path.join(__dirname, '..', '5_tpIntegradorFront', 'views', 'admin', 'modificar.html'));
 });
 
 app.get("/eliminar.html", (req, res) => {
-    res.sendFile(path.join(__dirname, '..', '5_tpIntegradorFront', 'views', 'eliminar.html'));
+    res.sendFile(path.join(__dirname, '..', '5_tpIntegradorFront', 'views', 'admin', 'eliminar.html'));
 });
 
 
