@@ -60,12 +60,12 @@ router.post("/", async (req, res) => {
         const safeImagen = imagen || null;
 
         let sql = "INSERT INTO productos (nombre, tipo, precio, imagen, stock) VALUES (?, ?, ?, ?, ?)";
-        let [rows] = await connection.query(sql, [nombre, safeTipo, precio, safeImagen, safeStock]);
+        let [result] = await connection.query(sql, [nombre, safeTipo, precio, safeImagen, safeStock]);
         
         res.status(201).json({
             message: "Producto creado exitosamente",
             payload: {
-                id: rows.insertId,
+                id: result.insertId,
                 nombre,
                 tipo: safeTipo,
                 precio,
@@ -88,9 +88,9 @@ router.delete("/:id", async (req, res) => {
     try {
         let { id } = req.params;
         let sql = "DELETE FROM productos WHERE id = ?";
-        let [rows] = await connection.query(sql, [id]);
+        let [result] = await connection.query(sql, [id]);
 
-        if (rows.affectedRows === 0) {
+        if (result.affectedRows === 0) {
             return res.status(404).json({
                 message: "No se encontró un producto con ese ID"
             });
@@ -140,9 +140,9 @@ router.put("/:id", async (req, res) => {
         const safeImagen = imagen || null;
 
         let sql = "UPDATE productos SET nombre = ?, tipo = ?, precio = ?, imagen = ?, stock = ? WHERE id = ?";
-        let [rows] = await connection.query(sql, [nombre, safeTipo, precio, safeImagen, safeStock, id]);
+        let [result] = await connection.query(sql, [nombre, safeTipo, precio, safeImagen, safeStock, id]);
 
-        if (rows.affectedRows === 0) {
+        if (result.affectedRows === 0) {
             return res.status(404).json({
                 message: "No se encontró un producto con ese ID para actualizar"
             });
