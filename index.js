@@ -2,7 +2,7 @@
     Importaciones
 ====================*/
 import express from "express";
-import path from 'path'; // Aún necesitamos path para 'path.join'
+import path from 'path'; 
 import environments from "./src/api/config/environments.js";
 import cors from "cors";
 import { calculateDirname } from "./src/utils/pathUtils.js";
