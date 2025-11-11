@@ -4,21 +4,21 @@ import connection from "../database/db.js";
 // Esta capa solo se encarga de las consultas SQL y de devolver los datos.
 // No maneja req ni res.
 
-export const getAll = async () => {
+const getAll = async () => {
     const sql = "SELECT * FROM productos";
     // Usamos 'nombreProducto' para ser consistentes, aunque 'SELECT *' trae todo.
     const [rows] = await connection.query(sql);
     return rows;
 };
 
-export const getById = async (id) => {
+const getById = async (id) => {
     const sql = "SELECT * FROM productos WHERE id = ?";
     const [rows] = await connection.query(sql, [id]);
     // Devuelve el primer resultado (el objeto) o null si no se encuentra
     return rows[0] || null;
 };
 
-export const create = async (product) => {
+const create = async (product) => {
     
     // Usamos 'nombreProducto' como nos indicaste
     const { nombreProducto, tipo, precio, imagen, stock } = product;
@@ -38,7 +38,7 @@ export const create = async (product) => {
     return result.insertId;
 };
 
-export const update = async (id, product) => {
+const update = async (id, product) => {
    
     const { nombreProducto, tipo, precio, imagen, stock } = product;
     
@@ -57,7 +57,7 @@ export const update = async (id, product) => {
 };
 
 
-export const remove = async (id) => {
+const remove = async (id) => {
     const sql = "DELETE FROM productos WHERE id = ?";
     const [result] = await connection.query(sql, [id]);
     
@@ -65,9 +65,18 @@ export const remove = async (id) => {
     return result.affectedRows;
 };
 
-export const removeAll = async () => {
+const removeAll = async () => {
     const sql = "DELETE FROM productos";
     await connection.query(sql);
     // No necesitamos devolver nada, solo confirmar que se ejecutó
     return; 
 };
+
+export {
+    getAll,
+    getById,
+    create,
+    update,
+    remove,
+    removeAll
+};  

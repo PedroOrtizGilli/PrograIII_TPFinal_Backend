@@ -1,7 +1,7 @@
 import * as ProductRepository from "../repositories/productsRepository.js";
 
 // --- Traer todos los productos ---
-export const getProducts = async (req, res) => {
+const getProducts = async (req, res) => {
     try {
         // 1. Pedimos los datos al repositorio
         const products = await ProductRepository.getAll();
@@ -20,7 +20,7 @@ export const getProducts = async (req, res) => {
 };
 
 // --- Consultar un producto por ID ---
-export const getProductById = async (req, res) => {
+const getProductById = async (req, res) => {
     try {
         const { id } = req.params;
         const product = await ProductRepository.getById(id);
@@ -43,7 +43,7 @@ export const getProductById = async (req, res) => {
 };
 
 // --- Crear un producto ---
-export const createProduct = async (req, res) => {
+const createProduct = async (req, res) => {
     try {
         const productData = req.body;
         // Le pasamos los datos al repositorio
@@ -67,7 +67,7 @@ export const createProduct = async (req, res) => {
 };
 
 // --- Actualizar un producto ---
-export const updateProduct = async (req, res) => {
+const updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
         const productData = req.body;
@@ -95,7 +95,7 @@ export const updateProduct = async (req, res) => {
 };
 
 // --- Eliminar un producto ---
-export const deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res) => {
     try {
         const { id } = req.params;
         // Le pasamos el ID al repositorio
@@ -120,7 +120,7 @@ export const deleteProduct = async (req, res) => {
 };
 
 // --- Eliminar todos los productos ---
-export const deleteAllProducts = async (req, res) => {
+const deleteAllProducts = async (req, res) => {
     try {
         // Llamamos al repositorio
         await ProductRepository.removeAll();
@@ -135,4 +135,13 @@ export const deleteAllProducts = async (req, res) => {
             message: "Error interno al eliminar productos"
         });
     }
+};
+
+export {
+    getProducts,
+    getProductById,
+    createProduct,
+    updateProduct,
+    deleteProduct,
+    deleteAllProducts
 };
