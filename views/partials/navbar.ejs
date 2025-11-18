@@ -1,0 +1,39 @@
+<header class="navbar">
+    
+    <!-- 
+      ¡CAMBIO!
+      Renderizamos el logo y el H1 directamente en el servidor 
+      usando la variable 'logoUrl' de res.locals.
+    -->
+    <div class="navbar-brand">
+        <img src="<%= logoUrl %>" alt="Logo Admin" class="admin-logo-img">
+        <h1>Gestor de Productos</h1>
+    </div>
+    
+    <nav>
+        <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/cargar.html">Cargar Producto</a></li>
+            <li><a href="/buscar.html">Buscar por ID</a></li>
+            <li><a href="/modificar.html">Modificar Producto</a></li>
+            <li><a href="/eliminar.html">Eliminar Producto</a></li>
+        </ul>
+    </nav>
+    
+    <!-- 
+      ¡CAMBIO!
+      Renderizamos los alumnos directamente en el servidor 
+      usando la variable 'alumnos' de res.locals.
+    -->
+    <div class="alumnos-info">
+        <strong>Alumnos:</strong><br>
+        
+        <!-- Hacemos un bucle EJS -->
+        <% alumnos.forEach(alumno => { %>
+        
+            <%= alumno.nombre %> <%= alumno.apellido %><br>
+        
+        <% }) %>
+    </div>
+
+</header>

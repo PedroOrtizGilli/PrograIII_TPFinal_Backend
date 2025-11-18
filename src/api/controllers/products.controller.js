@@ -1,4 +1,5 @@
-import * as ProductRepository from "../repositories/productsRepository.js";
+
+import * as ProductRepository from "../models/products.repository.js";
 
 // --- Traer todos los productos ---
 const getProducts = async (req, res) => {
