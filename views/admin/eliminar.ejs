@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- ¡CAMBIO! Reemplazamos todo el head por el parcial. -->
+    <%- include('../partials/head', { title: title }) %>
+</head>
+<body>
+
+    <!-- ¡CAMBIO! Reemplazamos todo el header por el parcial. -->
+    <%- include('../partials/navbar') %>
+
+    <!-- El <main> y <script> de esta página no cambian -->
+    <main class="admin-container">
+        
+        <div class="form-section">
+            <h2>Acciones de Productos</h2>
+            <hr>
+            
+            <form id="form-buscar-producto">
+                <div class="form-group"> 
+                    <label for="buscar-id">Buscar Producto por ID</label>
+                    <input type="number" name="idProd" id="buscar-id" required>
+                </div>
+                <button type="submit" class="submit-button">Buscar</button>
+            </form>
+
+            <hr style="margin: 20px 0;">
+
+            <div class="form-group" style="display: flex; gap: 10px;">
+                <button id="btn-mostrar-todos" class="submit-button" style="background-color: #17a2b8;">
+                    Mostrar Todo el Listado
+                </button>
+                <button id="btn-eliminar-todos" class="submit-button delete-button">
+                    Eliminar Todos los Productos
+                </button>
+            </div>
+        </div>
+
+        <div id="resultado-busqueda" style="display: none; margin-top: 20px;">
+            <h2>Resultado</h2>
+            <div id="contenedor-productos" class="product-grid">
+                <!-- Las tarjetas se inyectarán aquí -->
+            </div>
+            <button id="btn-eliminar-especifico" class="submit-button delete-button" style="display: none; margin-top: 20px; max-width: 400px; margin-left: auto; margin-right: auto;">
+                Eliminar Este Producto
+            </button>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const formBuscar = document.getElementById('form-buscar-producto');
+            const btnMostrarTodos = document.getElementById('btn-mostrar-todos');
+            const btnEliminarTodos = document.getElementById('btn-eliminar-todos');
+            const btnEliminarEspecifico = document.getElementById('btn-eliminar-especifico');
+            
+            const resultadoBusqueda = document.getElementById('resultado-busqueda');
+            const contenedorProductos = document.getElementById('contenedor-productos');
+            
+            const url = "/products"; 
+            let idProductoBuscado = null; 
+
+            // --- 1. Lógica para Buscar por ID ---
+            formBuscar.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const formData = new FormData(formBuscar);
+                const id = formData.get('idProd');
+                
+                if (!id) return;
+                idProductoBuscado = id; 
+
+                try {
+                    const response = await fetch(`${url}/${id}`);
+                    const data = await response.json();
+
+                    if (!response.ok || !data.payload) {
+                        throw new Error(data.message || 'Producto no encontrado');
+                    }
+                    
+                    const producto = data.payload;
+                    mostrarTarjetas([producto]); 
+                    btnEliminarEspecifico.style.display = 'block'; 
+
+                } catch (error) {
+                    Swal.fire('Error', `Error al buscar: ${error.message}`, 'error');
+                    resultadoBusqueda.style.display = 'none';
+                }
+            });
+
+            // --- 2. Lógica para Mostrar Todos ---
+            btnMostrarTodos.addEventListener('click', async () => {
+                idProductoBuscado = null; 
+                btnEliminarEspecifico.style.display = 'none'; 
+
+                try {
+                    const response = await fetch(url); 
+                    const data = await response.json();
+                    
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Error al cargar productos');
+                    }
+                    mostrarTarjetas(data.payload); 
+
+                } catch (error) {
+                    Swal.fire('Error', `Error al mostrar todos: ${error.message}`, 'error');
+                    resultadoBusqueda.style.display = 'none';
+                }
+            });
+
+            // --- 3. Lógica para Eliminar Específico ---
+            btnEliminarEspecifico.addEventListener('click', async () => {
+                if (!idProductoBuscado) return;
+
+                const result = await Swal.fire({
+                    title: `¿Eliminar Producto ID ${idProductoBuscado}?`,
+                    text: "Esta acción no se puede deshacer.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, ¡Eliminar!',
+                    cancelButtonText: 'Cancelar'
+                });
+
+                if (!result.isConfirmed) {
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${url}/${idProductoBuscado}`, {
+                        method: 'DELETE'
+                    });
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Error al eliminar');
+                    }
+                    
+                    Swal.fire('¡Eliminado!', data.message, 'success');
+                    
+                    resultadoBusqueda.style.display = 'none';
+                    formBuscar.reset();
+
+                } catch (error) {
+                    Swal.fire('Error', `Error al eliminar: ${error.message}`, 'error');
+                }
+            });
+
+            // --- 4. Lógica para Eliminar Todos ---
+            btnEliminarTodos.addEventListener('click', async () => {
+                
+                const result = await Swal.fire({
+                    title: '¿ELIMINAR TODO?',
+                    text: "ADVERTENCIA: ¿Estás SEGURO de que quieres eliminar TODOS los productos? Esta acción no se puede deshacer.",
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'SÍ, ELIMINAR TODO',
+                    cancelButtonText: 'Cancelar'
+                });
+
+                if (!result.isConfirmed) {
+                    return;
+                }
+
+                try {
+                    const response = await fetch(url, { method: 'DELETE' });
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Error al eliminar');
+                    }
+                    
+                    Swal.fire('¡Eliminados!', data.message, 'success');
+                    
+                    resultadoBusqueda.style.display = 'none';
+                    formBuscar.reset();
+
+                } catch (error) {
+                    Swal.fire('Error', `Error al eliminar todo: ${error.message}`, 'error');
+                }
+            });
+
+            // --- Función Ayudante para Mostrar Tarjetas (sin cambios) ---
+            function mostrarTarjetas(productos) {
+                contenedorProductos.innerHTML = ''; 
+                if (!productos || productos.length === 0) {
+                    contenedorProductos.innerHTML = '<p>No se encontraron productos.</p>';
+                    resultadoBusqueda.style.display = 'block';
+                    return;
+                }
+                productos.forEach(producto => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    const urlDeImagen = producto.imagen || 'https://via.placeholder.com/250x200.png?text=Sin+Imagen';
+                    card.innerHTML = `
+                        <img src="${urlDeImagen}" alt="${producto.nombreProducto}">
+                        <div class="product-info">
+                            <h3>(ID: ${producto.id}) ${producto.nombreProducto}</h3>
+                            <p class="product-tipo">Tipo: ${producto.tipo || 'N/A'}</p>
+                            <p class="product-precio">$${producto.precio}</p>
+                            <p class="product-stock">Stock: ${producto.stock || 0}</p>
+                        </div>
+                    `;
+                    contenedorProductos.appendChild(card);
+                });
+                resultadoBusqueda.style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>

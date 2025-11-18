@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import * as ProductController from "../src/api/controllers/productsController.js";
+import * as ProductController from "../src/api/controllers/products.controller.js";
 
 
 // Traer todos los productos
