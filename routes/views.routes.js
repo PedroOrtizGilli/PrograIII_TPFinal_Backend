@@ -2,7 +2,7 @@ import { Router } from "express";
 
 // --- ¡ESTA ES LA LÍNEA CLAVE! ---
 // La ruta correcta sube un nivel (../) y luego entra a (src/api/repositories/...)
-import * as ProductRepository from "../src/api/repositories/products.repository.js";
+import * as ProductRepository from "../src/api/models/products.repository.js";
 
 const router = Router();
 
