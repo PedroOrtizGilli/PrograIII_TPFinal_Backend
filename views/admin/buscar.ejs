@@ -1,22 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- 
-      ¡CAMBIO! Reemplazamos todo el head por el parcial.
-      La variable 'title' viene de 'views.routes.js'.
-      Usamos ../partials/ porque estamos en la subcarpeta 'admin'.
-    -->
+    
     <%- include('../partials/head', { title: title }) %>
 </head>
 <body>
 
-    <!-- ¡CAMBIO! Reemplazamos todo el header por el parcial. -->
+    <!-- Reemplazamos todo el header por el parcial. -->
     <%- include('../partials/navbar') %>
 
-    <!-- 
-      El contenido <main> y el <script> de esta página 
-      permanecen idénticos, ya que su lógica es del cliente.
-    -->
     <main class="admin-container"> 
         <div class="form-section">
             <h1>Consultar producto por id</h1>
