@@ -33,10 +33,8 @@ app.set('views', join(__dirname, 'views'));
     Middlewares Globales
 ====================*/
 
-// 1. Logger (Para ver las peticiones en consola)
 app.use(loggerUrl);
 
-// 2. CORS y Parsing de datos
 app.use(cors());
 app.use(express.json()); 
 
