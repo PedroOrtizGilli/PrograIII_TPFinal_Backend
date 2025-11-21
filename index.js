@@ -3,17 +3,19 @@
 ====================*/
 import express from "express";
 import cors from "cors";
+// Importamos __dirname y join desde TU archivo utils (respetando tu código)
 import { __dirname, join } from "./src/utils/path.utils.js";
-// Importamos las variables de entorno (para el puerto)
+
+// Configuración
 import environments from "./src/api/config/environments.js";
 
-// Importamos nuestros routers delegados
-import productsRouter from "./routes/products.routes.js"; // (Asegúrate que este nombre coincida con tu archivo)
+// Routers
+import productsRouter from "./routes/products.routes.js";
 import viewsRouter from "./routes/views.routes.js";
 
-// Importamos el middleware de 'locals'
-import { addLocals } from "./src/middlewares/locals.middleware.js";
-
+// Middlewares (Desde src/api/middlewares como indicaste)
+import { addLocals } from "./src/api/middlewares/locals.middleware.js";
+import { loggerUrl } from "./src/api/middlewares/logger.middleware.js"; 
 
 /*====================
     Configuración Inicial
@@ -22,35 +24,40 @@ const app = express();
 const PORT = environments.port;
 
 // --- CONFIGURACIÓN DE EJS ---
-// Le decimos a Express que EJS es nuestro motor de plantillas
 app.set('view engine', 'ejs');
-// Le decimos que nuestras vistas están en la carpeta 'views' LOCAL
-app.set('views', join(__dirname, 'views'));
+
+app.set('views', join(__dirname, 'views')); 
 
 
 /*====================
-    Middlewares
+    Middlewares Globales
 ====================*/
+
+// 1. Logger (Para ver las peticiones en consola)
+app.use(loggerUrl);
+
+// 2. CORS y Parsing de datos
 app.use(cors());
 app.use(express.json()); 
+
+// Permite recibir datos de formularios HTML (como el de cargar.ejs)
 app.use(express.urlencoded({ extended: true })); 
 
-// --- Middlewares Estáticos ---
-// Hacemos que la carpeta 'public' local sea accesible
+// Apuntamos a la carpeta 'public' (donde están css y js del front)
 app.use(express.static(join(__dirname, 'public')));
 
-
-// --- Middleware de Locales (Sin cambios) ---
+// Este middleware inyecta datos en 'res.locals' para que EJS los use
 app.use(addLocals);
 
 
 /*==================
-    Rutas (Delegadas)
+    Rutas
 ====================*/
-// Delegamos las rutas de la API (Sin cambios)
+
+// Rutas de la API (Datos)
 app.use("/products", productsRouter);
 
-// Delegamos las rutas de las Vistas (Sin cambios)
+// Rutas de las Vistas (HTML renderizado)
 app.use("/", viewsRouter);
 
 
