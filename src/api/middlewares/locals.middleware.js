@@ -12,7 +12,7 @@ const alumnos = [
 ];
 
 // Definir la URL del logo
-const logoUrl = "https://image.pngaaa.com/392/5315392-middle.png";
+const logoUrl = "https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX9896883.jpg";
 
 // Función de middleware para añadir a res.locals
 export const addLocals = (req, res, next) => {

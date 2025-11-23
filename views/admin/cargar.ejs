@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- Incluimos el head parcial -->
     <%- include('../partials/head', { title: title }) %>
-  
 </head>
 <body>
 
-    <!-- Incluimos el navbar parcial -->
     <%- include('../partials/navbar') %>
 
     <main class="admin-container">
@@ -16,7 +13,6 @@
             <hr>
             
             <form id="altaProducts-form">
-                
                 <div class="form-group">
                     <label for="prod-nombre">Nombre del Producto</label>
                     <input type="text" name="nombreProducto" id="prod-nombre" required>
@@ -25,8 +21,8 @@
                 <div class="form-group">
                     <label for="prod-tipo">Categoría</label>
                     <select name="tipo" id="prod-tipo" required>
-                        <option value="LP">LP</option>
-                        <option value="CD">CD</option>
+                        <option value="Pintura Acrilica">Pintura Acrilica</option>
+                        <option value="Pinceles">Pinceles</option>
                     </select>
                 </div>
 
@@ -50,62 +46,8 @@
         </div>
     </main>
 
-    <!-- 
-      El script de esta página (el de la clase) lo dejamos aquí,
-      al final del body.
-    -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const altaProductsForm = document.getElementById("altaProducts-form");
-            const url = "/products"; // Ruta relativa
-
-            altaProductsForm.addEventListener("submit", async (event) => {
-                event.preventDefault(); 
-
-                const formData = new FormData(event.target);
-                const data = Object.fromEntries(formData.entries());
-                console.log("Enviando al backend:", data);
-
-                try {
-                    const response = await fetch(url, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(data)
-                    }); 
-
-                    const result = await response.json();
-
-                    if (response.ok) {
-                        console.log(result.message);
-                        
-                        await Swal.fire({
-                            title: '¡Éxito!',
-                            text: 'Producto creado con éxito',
-                            icon: 'success',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                        
-                        window.location.href = '/'; 
-
-                    } else {
-                        throw new Error(result.message || 'Error desconocido');
-                    }
-
-                } catch(error) {
-                    console.error("Error al enviar los datos: ", error);
-                    
-                    Swal.fire({
-                        title: 'Error',
-                        text: `Error al procesar la solicitud: ${error.message}`,
-                        icon: 'error'
-                    });
-                }
-            });
-        });
-    </script>
+    <!-- ¡AQUÍ VINCULAMOS EL NUEVO ARCHIVO JS! -->
+    <script src="/js/create.js" defer></script>
 
 </body>
 </html>
