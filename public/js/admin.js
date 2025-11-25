@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error(error);
-            alert(`Error: ${error.message}`);
+            Swal.fire('Error', `No se pudo crear el producto: ${error.message}`, 'error');
         }
     }
 });
