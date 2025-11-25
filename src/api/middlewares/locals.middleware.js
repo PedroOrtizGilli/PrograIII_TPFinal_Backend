@@ -22,6 +22,5 @@ export const addLocals = (req, res, next) => {
     res.locals.alumnos = alumnos;
     res.locals.logoUrl = logoUrl;
 
-    // Continuamos con la siguiente función (ej. el router de vistas)
     next();
 };

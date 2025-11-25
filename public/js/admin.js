@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const productContainer = document.getElementById('contenedor-productos');
 
-    // --- LÓGICA DEL CONTENEDOR DE PRODUCTOS ---
-    // Si el contenedor de productos existe en esta página, cargamos los productos
     if (productContainer) {
         fetchYMostrarProductos();
     } else {

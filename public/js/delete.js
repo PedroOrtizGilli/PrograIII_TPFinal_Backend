@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if(!formBuscar) return;
 
-    // --- 1. Buscar por ID ---
+    // --- Buscar Producto ---
     formBuscar.addEventListener('submit', async (event) => {
         event.preventDefault();
         const formData = new FormData(formBuscar);
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- 2. Mostrar Todos ---
+    // --- Mostrar Todos ---
     btnMostrarTodos.addEventListener('click', async () => {
         idProductoBuscado = null; 
         btnEliminarEspecifico.style.display = 'none'; 
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- 3. Eliminar Específico ---
+    // --- Eliminar Específico ---
     btnEliminarEspecifico.addEventListener('click', async () => {
         if (!idProductoBuscado) return;
 
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- 4. Eliminar TODOS ---
+    // --- Eliminar TODOS ---
     btnEliminarTodos.addEventListener('click', async () => {
         const result = await Swal.fire({
             title: '¿ELIMINAR TODO?',

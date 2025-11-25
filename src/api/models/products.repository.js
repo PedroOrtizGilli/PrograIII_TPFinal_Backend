@@ -1,12 +1,9 @@
 // Importamos la conexión a la BD
 import connection from "../database/db.js";
 
-// Esta capa solo se encarga de las consultas SQL y de devolver los datos.
-// No maneja req ni res.
-
 const getAll = async () => {
     const sql = "SELECT * FROM productos";
-    // Usamos 'nombreProducto' para ser consistentes, aunque 'SELECT *' trae todo.
+    
     const [rows] = await connection.query(sql);
     return rows;
 };
@@ -14,13 +11,12 @@ const getAll = async () => {
 const getById = async (id) => {
     const sql = "SELECT * FROM productos WHERE id = ?";
     const [rows] = await connection.query(sql, [id]);
-    // Devuelve el primer resultado (el objeto) o null si no se encuentra
+    
     return rows[0] || null;
 };
 
 const create = async (product) => {
     
-    // Usamos 'nombreProducto' como nos indicaste
     const { nombreProducto, tipo, precio, imagen, stock } = product;
 
     // Aseguramos valores por defecto
