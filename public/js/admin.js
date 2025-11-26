@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const productContainer = document.getElementById('contenedor-productos');
 
-    // --- LÓGICA DEL CONTENEDOR DE PRODUCTOS ---
-    // Si el contenedor de productos existe en esta página, cargamos los productos
     if (productContainer) {
         fetchYMostrarProductos();
     } else {
@@ -90,21 +88,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(errorData.message || 'Error al crear el producto');
             }
 
-            // Si todo salió bien:
             form.reset(); // Limpiamos el formulario
             
             if (productContainer) {
                 // Si el contenedor de productos existe en esta página, actualiza la lista
                 fetchYMostrarProductos(); 
             } else {
-                // Si estamos en otra página (ej. cargar.html), avisamos y redirigimos
+               
                 alert('Producto creado con éxito. Serás redirigido al inicio.');
                 window.location.href = '/'; // Redirige al inicio
             }
 
         } catch (error) {
             console.error(error);
-            alert(`Error: ${error.message}`);
+            Swal.fire('Error', `No se pudo crear el producto: ${error.message}`, 'error');
         }
     }
 });

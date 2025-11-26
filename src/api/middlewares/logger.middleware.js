@@ -3,12 +3,10 @@ const loggerUrl = (req, res, next) => {
     const path = req.path;
     const method = req.method;
 
-    // --- LISTA NEGRA DE EXTENSIONES ---
     // Si la ruta termina en cualquiera de estas, NO se imprime nada.
     const extensionesIgnoradas = [
         '.css', '.js', '.html', '.map', '.ico', 
-        '.png', '.jpg', '.jpeg', '.gif', '.svg', 
-        '.woff', '.woff2', '.ttf', '.eot'
+        '.png', '.jpg', '.jpeg', '.gif', '.svg'
     ];
 
     // Verificamos si la URL actual termina con alguna extensión ignorada
@@ -19,7 +17,6 @@ const loggerUrl = (req, res, next) => {
         return next();
     }
 
-    // --- IMPRESIÓN LIMPIA ---
     // Solo llegamos aquí si es una ruta de API (/products) o una Vista principal
     console.log(`[${new Date().toLocaleString()}] ${method} ${req.url}`);
     
@@ -31,7 +28,6 @@ const loggerUrl = (req, res, next) => {
 const validateId = (req, res, next) => {
     let { id } = req.params;
 
-    // Nos aseguramos que el ID sea un numero (La consulta podria fallar o generar un error en la BBDD)
     if(!id || isNaN(Number(id))) {
         return res.status(400).json({
             message: "El id del producto debe ser un numero valido"

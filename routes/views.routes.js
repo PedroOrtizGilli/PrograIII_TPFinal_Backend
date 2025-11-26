@@ -1,6 +1,5 @@
 import { Router } from "express";
 
-// La ruta correcta sube un nivel (../) y luego entra a (src/api/repositories/...)
 import * as ProductRepository from "../src/api/models/products.repository.js";
 
 const router = Router();
@@ -8,9 +7,7 @@ const router = Router();
 /*==================
     Rutas de Vistas (EJS)
 ==================*/
-// La raíz de vistas ahora es: '.../5_tpIntegradorBack/views/'
 
-// --- Servir VISTA Principal ---
 router.get("/", async (req, res) => {
     try {
         const products = await ProductRepository.getAll();
@@ -27,31 +24,29 @@ router.get("/", async (req, res) => {
     }
 });
 
-// --- Servir el resto de las Vistas ---
-
 router.get("/cargar", (req, res) => {
-    // Express buscará en: 'views/admin/cargar.ejs'
+    
     res.render('admin/cargar', {
         title: 'Cargar Producto'
     });
 });
 
 router.get("/buscar", (req, res) => {
-    // Express buscará en: 'views/admin/buscar.ejs'
+ 
     res.render('admin/buscar', {
         title: 'Buscar Producto'
     });
 });
 
 router.get("/modificar", (req, res) => {
-    // Express buscará en: 'views/admin/modificar.ejs'
+    
     res.render('admin/modificar', {
         title: 'Modificar Producto'
     });
 });
 
 router.get("/eliminar", (req, res) => {
-    // Express buscará en: 'views/admin/eliminar.ejs'
+   
     res.render('admin/eliminar', {
         title: 'Eliminar Producto'
     });

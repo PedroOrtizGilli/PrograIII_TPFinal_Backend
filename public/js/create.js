@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
 
             if (response.ok) {
-                // Usamos SweetAlert (ya cargado en head.ejs)
+                // Usamos SweetAlert 
                 await Swal.fire({
                     title: '¡Éxito!',
                     text: 'Producto creado con éxito',

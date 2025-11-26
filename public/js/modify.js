@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if(!formBuscar || !formModificar) return;
 
-    // --- 1. Buscar ---
+    // --- Buscar ---
     formBuscar.addEventListener('submit', async (event) => {
         event.preventDefault();
         const formData = new FormData(formBuscar);
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- 2. Modificar (PUT) ---
+    // --- Modificar (PUT) ---
     formModificar.addEventListener('submit', async (event) => {
         event.preventDefault();
         if (!idProductoBuscado) {
