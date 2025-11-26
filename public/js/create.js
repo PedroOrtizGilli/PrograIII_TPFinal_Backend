@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    //Creacion de un producto
     const altaProductsForm = document.getElementById("altaProducts-form");
     const url = "/products"; // Ruta relativa
 
@@ -49,4 +50,38 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    //Creacion de usuario
+    let altaUser_container = document.getElementById('altaUsers-container')
+
+    altaUser_container.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        let formData = new FormData(event.target);
+
+        let data = Object.fromEntries(formData.entries());
+
+        try{
+            let response = await fetch("/api/users", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            console.log(response);
+
+            if(response.ok){
+                console.log(response);
+
+                let result = await response.json();
+                console.log(result);
+                alert(result.message);
+            }
+
+        }catch(error){
+            console.error("Error al enviar los datos: ", error);
+            alert("Error al procesar la solicitud");
+        }
+    })
 });

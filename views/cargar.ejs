@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <%- include('../partials/head', { title: title }) %>
+    <%- include('./partials/head', { title: title }) %>
 </head>
 <body>
 
-    <%- include('../partials/navbar') %>
+    <%- include('./partials/navbar') %>
 
     <main class="admin-container">
         <div class="form-section">
@@ -44,6 +44,21 @@
                 <button type="submit" class="submit-button">Crear producto</button>
             </form>
         </div>
+
+        <!-- Formulario que va a enviar nuestros datos al endpoint /api/users-->
+        <h2>Alta Usuarios</h2>
+        <form id="altaUsers-container">
+    
+            <label for="correoUser">Correo</label>
+            <input type="email" name="correo" id="correoUser" required>
+    
+            <label for="contraseniaUser">Contraseña</label>
+            <input type="password" name="contrasenia" id="contraseniaUser" required>
+    
+            <input type="submit" value="Crear usuario">
+        </form>
+
+
     </main>
 
     <!-- ¡AQUÍ VINCULAMOS EL NUEVO ARCHIVO JS! -->

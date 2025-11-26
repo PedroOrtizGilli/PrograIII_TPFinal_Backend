@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import * as ProductRepository from "../src/api/models/products.repository.js";
+import { requiereLogin } from "../src/api/middlewares/logger.middleware.js";
 
 const router = Router();
 
@@ -8,7 +9,7 @@ const router = Router();
     Rutas de Vistas (EJS)
 ==================*/
 
-router.get("/", async (req, res) => {
+router.get("/", requiereLogin, async (req, res) => {
     try {
         const products = await ProductRepository.getAll();
         
@@ -26,29 +27,35 @@ router.get("/", async (req, res) => {
 
 router.get("/cargar", (req, res) => {
     
-    res.render('admin/cargar', {
+    res.render('cargar', {
         title: 'Cargar Producto'
     });
 });
 
-router.get("/buscar", (req, res) => {
+router.get("/buscar", requiereLogin, (req, res) => {
  
-    res.render('admin/buscar', {
+    res.render('buscar', {
         title: 'Buscar Producto'
     });
 });
 
-router.get("/modificar", (req, res) => {
+router.get("/modificar", requiereLogin, (req, res) => {
     
-    res.render('admin/modificar', {
+    res.render('modificar', {
         title: 'Modificar Producto'
     });
 });
 
-router.get("/eliminar", (req, res) => {
+router.get("/eliminar", requiereLogin, (req, res) => {
    
-    res.render('admin/eliminar', {
+    res.render('eliminar', {
         title: 'Eliminar Producto'
+    });
+});
+
+router.get("/login", (req, res) => {
+    res.render('login', {
+        title: "login"
     });
 });
 

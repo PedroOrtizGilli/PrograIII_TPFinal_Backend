@@ -41,8 +41,17 @@ const validateId = (req, res, next) => {
     next();
 }
 
+//Middleware para chequear si esta logueado o no
+const requiereLogin = (req, res, next) => {
+    if(!req.session.user){
+        return res.redirect('/login');
+    }
+    next()
+}
+
 
 export {
     loggerUrl,
     validateId,
+    requiereLogin
 }

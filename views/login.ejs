@@ -1,0 +1,26 @@
+<%- include('./partials/head', { title: title }) %>
+
+<div class="login-container">
+
+    <h1>Login</h1>
+
+    <% if (typeof error !== "undefined"){ %>
+        <div class="error-msg">
+            <%= error %>
+        </div>
+    <% } %>
+
+    <form id="login-form" action="/login" method="POST" autocomplete="off">
+
+        <label for="correoUser">Correo</label>
+        <input type="email" name="correo" id="correoUser" required> 
+
+        <label for="contraseniaUser">Password</label>
+        <input type="password" name="contrasenia" id="contraseniaUser" required>
+
+        <input type="submit" class="btn-login" value="Login">
+    </form>
+
+</div>
+
+<script src="/js/login.js" defer></script>
