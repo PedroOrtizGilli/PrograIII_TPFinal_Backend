@@ -2,6 +2,7 @@
     Importaciones
 ====================*/
 import express from "express";
+import session from "express-session";
 import cors from "cors";
 // Importamos __dirname y join desde TU archivo utils (respetando tu código)
 import { __dirname, join } from "./src/utils/path.utils.js";
@@ -21,6 +22,7 @@ import { loggerUrl } from "./src/api/middlewares/logger.middleware.js";
     Configuración Inicial
 ====================*/
 const app = express();
+const SESSION_KEY = environments.session_key;
 const PORT = environments.port;
 
 // --- CONFIGURACIÓN DE EJS ---
@@ -46,6 +48,12 @@ app.use(express.static(join(__dirname, 'public')));
 
 // Este middleware inyecta datos en 'res.locals' para que EJS los use
 app.use(addLocals);
+
+app.use(session_key({
+    secret: SESSION_KEY, //Firma las cookies para evitar manipulacion
+    resave: false, //Evita guardar la sesion si no hubo cambios
+    saveUnitilized: true //No guarda sesiones vacias
+}));
 
 
 /*==================

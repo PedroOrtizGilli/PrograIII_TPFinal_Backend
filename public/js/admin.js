@@ -57,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error(error);
-            // Mensaje de error simple si algo falla
             productContainer.innerHTML = `<p class="error-message">Error al cargar productos.</p>`;
         }
     }

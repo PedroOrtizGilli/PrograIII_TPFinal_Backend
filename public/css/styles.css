@@ -51,8 +51,8 @@ h1, h2 {
     height: 50px;  
     width: 50px;   
     object-fit: cover; 
-    border-radius: 50%; /* La hace redonda */
-    background-color: #fff; /* Fondo blanco por si la imagen tiene transparencia */
+    border-radius: 50%;
+    background-color: #fff;
 }
 
 .navbar h1 {

@@ -1,6 +1,5 @@
 import { Router } from "express";
 
-// --- ¡ESTA ES LA LÍNEA CLAVE! ---
 // La ruta correcta sube un nivel (../) y luego entra a (src/api/repositories/...)
 import * as ProductRepository from "../src/api/models/products.repository.js";
 
@@ -16,7 +15,7 @@ router.get("/", async (req, res) => {
     try {
         const products = await ProductRepository.getAll();
         
-        // ¡Ruta limpia! Express buscará en 'views/indexAdmin.ejs'
+        // Express buscará en 'views/indexAdmin.ejs'
         res.render('indexAdmin', { 
             title: 'Inicio - Gestor',
             products: products 
@@ -29,30 +28,29 @@ router.get("/", async (req, res) => {
 });
 
 // --- Servir el resto de las Vistas ---
-// ¡Rutas limpias!
 
-router.get("/cargar.html", (req, res) => {
+router.get("/cargar", (req, res) => {
     // Express buscará en: 'views/admin/cargar.ejs'
     res.render('admin/cargar', {
         title: 'Cargar Producto'
     });
 });
 
-router.get("/buscar.html", (req, res) => {
+router.get("/buscar", (req, res) => {
     // Express buscará en: 'views/admin/buscar.ejs'
     res.render('admin/buscar', {
         title: 'Buscar Producto'
     });
 });
 
-router.get("/modificar.html", (req, res) => {
+router.get("/modificar", (req, res) => {
     // Express buscará en: 'views/admin/modificar.ejs'
     res.render('admin/modificar', {
         title: 'Modificar Producto'
     });
 });
 
-router.get("/eliminar.html", (req, res) => {
+router.get("/eliminar", (req, res) => {
     // Express buscará en: 'views/admin/eliminar.ejs'
     res.render('admin/eliminar', {
         title: 'Eliminar Producto'
