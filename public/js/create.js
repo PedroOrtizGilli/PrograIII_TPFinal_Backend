@@ -75,13 +75,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(response);
 
                 let result = await response.json();
-                console.log(result);
-                alert(result.message);
-            }
+                await Swal.fire({
+                        title: '¡Usuario Creado!',
+                        text: result.message,
+                        icon: 'success',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+
+                    // Limpiar el formulario si funciona
+                    event.target.reset();
+            }else {
+                    // Si el servidor responde con error mostramos el mensaje
+                    let result = await response.json();
+                    throw new Error(result.message || "Error desconocido");
+                }
 
         }catch(error){
             console.error("Error al enviar los datos: ", error);
-            alert("Error al procesar la solicitud");
+            Swal.fire({
+                    title: 'Error',
+                    text: `Error al procesar la solicitud: ${error.message || ''}`,
+                    icon: 'error'
+                });
         }
     })
 });
