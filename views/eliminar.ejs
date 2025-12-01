@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- ¡CAMBIO! Reemplazamos todo el head por el parcial. -->
     <%- include('./partials/head', { title: title }) %>
 </head>
 <body>
 
-    <!-- ¡CAMBIO! Reemplazamos todo el header por el parcial. -->
     <%- include('./partials/navbar') %>
 
-    <!-- El <main> y <script> de esta página no cambian -->
     <main class="admin-container">
         
         <div class="form-section">
@@ -39,7 +36,6 @@
         <div id="resultado-busqueda" style="display: none; margin-top: 20px;">
             <h2>Resultado</h2>
             <div id="contenedor-productos" class="product-grid">
-                <!-- Las tarjetas se inyectarán aquí -->
             </div>
             <button id="btn-eliminar-especifico" class="submit-button delete-button" style="display: none; margin-top: 20px; max-width: 400px; margin-left: auto; margin-right: auto;">
                 Eliminar Este Producto
@@ -47,7 +43,6 @@
         </div>
     </main>
 
-    <!-- Script Modularizado -->
     <script src="/js/delete.js" defer></script>
 
 </body>
