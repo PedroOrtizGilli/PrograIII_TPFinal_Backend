@@ -1,10 +1,8 @@
-// Importamos el modulo dotenv que previamente instalamos
 import dotenv from "dotenv";
 
-// Ahora que lo importamos, vamos a poder usar sus metodos y funciones
-dotenv.config(); // El metodo config carga las variables de entornop desde nuestro archivo .env
+dotenv.config(); 
+// El metodo config carga las variables de entornop desde nuestro archivo .env
 
-// Vamos a exportar esta informacion sensible
 export default {
     port: process.env.PORT || 3100,
     database: {

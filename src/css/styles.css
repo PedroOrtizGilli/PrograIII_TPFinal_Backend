@@ -1,4 +1,4 @@
-/* --- Reset Global y Body --- */
+/* --- Global y Body --- */
 * {
     box-sizing: border-box;
 }
@@ -27,38 +27,37 @@ h1, h2 {
     
 }
 
-/* --- Navbar (Mobile-First) --- */
+/* --- Navbar --- */
 .navbar {
     background-color: #333;
     color: white;
     padding: 15px;
     display: flex;
-    flex-direction: column; /* Apilado en móvil */
-    align-items: center;   /* Centrado en móvil */
+    flex-direction: column; 
+    align-items: center;  
     gap: 15px;
     margin-bottom: 20px;
 }
 
-/* --- Estilo para el contenedor de la "marca" (Logo + H1) --- */
+/* --- Estilo para el contenedor de la marca --- */
 .navbar-brand {
     display: flex;
     align-items: center;
-    gap: 10px; /* Espacio entre logo y H1 */
+    gap: 10px; 
 }
 
-/* --- Estilo para la IMAGEN del logo --- */
+/* --- IMAGEN del logo --- */
 .admin-logo-img {
     height: 50px;  
     width: 50px;   
     object-fit: cover; 
-    border-radius: 50%; /* La hace redonda */
-    background-color: #fff; /* Fondo blanco por si la imagen tiene transparencia */
+    border-radius: 50%;
+    background-color: #fff; 
 }
 
 .navbar h1 {
     margin: 0;
     font-size: 1.5rem;
-    /* text-align: center; Centrado en móvil */
 }
 
 .navbar nav {
@@ -70,7 +69,7 @@ h1, h2 {
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: column; /* Apilado en móvil */
+    flex-direction: column; 
     width: 100%;
     gap: 10px;
     align-items: center;
@@ -91,7 +90,7 @@ h1, h2 {
     background-color: #444;
 }
 
-/* --- Estilos para los datos del alumno (Móvil) --- */
+/* --- Datos del alumno --- */
 .alumnos-info {
     font-size: 0.8rem;
     color: #ccc;
@@ -105,7 +104,7 @@ h1, h2 {
 /* --- Navbar (Desktop) --- */
 @media (min-width: 768px) {
     .navbar {
-        flex-direction: row; /* Horizontal en desktop */
+        flex-direction: row; 
         justify-content: space-between;
         padding: 10px 30px;
     }
@@ -121,17 +120,16 @@ h1, h2 {
     }
 
     .navbar nav ul {
-        flex-direction: row; /* Horizontal en desktop */
-        justify-content: space-around; /* Ocupa todo el ancho del nav */
-        gap: 10px; /* Espacio mínimo entre elementos */
+        flex-direction: row; 
+        justify-content: space-around; 
+        gap: 10px; 
     }
 
     .navbar nav a {
-        width: auto; /* Ancho automático en desktop */
+        width: auto; 
     }
     
     .alumnos-info {
-        /* En desktop, lo alineamos a la derecha y apilamos */
         text-align: right;
         width: auto;
         flex-basis: auto; /* Ancho automático */
@@ -146,24 +144,24 @@ h1, h2 {
 /* --- Contenedor Principal --- */
 .admin-container {
     display: grid;
-    grid-template-columns: 1fr; /* Una sola columna siempre está bien */
+    grid-template-columns: 1fr; 
     gap: 20px;
     max-width: 1400px;
     margin: 20px auto;
-    padding: 0 15px; /* Padding para móvil */
+    padding: 0 15px; 
 }
 
 @media (min-width: 768px) {
     .admin-container {
         gap: 30px;
-        padding: 0 30px; /* Más padding en desktop */
+        padding: 0 30px; 
     }
 }
 
 /* --- Secciones de Formulario y Lista --- */
 .form-section, .list-section {
     background-color: #ffffff;
-    padding: 20px; /* Menos padding en móvil */
+    padding: 20px; 
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
 }
@@ -193,8 +191,8 @@ h1, h2 {
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    box-sizing: border-box; /* ¡Importante! */
-    font-size: 1rem; /* Previene el zoom en iOS */
+    box-sizing: border-box; 
+    font-size: 1rem; 
 }
 
 .submit-button,
@@ -209,10 +207,9 @@ h1, h2 {
     cursor: pointer;
     transition: background-color 0.3s ease;
     box-sizing: border-box;
-    margin-bottom: 10px; /* Espacio en móvil */
+    margin-bottom: 10px; 
 }
 
-/* Permitimos que los botones en línea (como en la tabla) tengan su propio ancho */
 td .edit-button,
 td .delete-button {
     width: auto;
@@ -225,7 +222,7 @@ td .delete-button {
 }
 
 
-/* --- Grilla de Productos (¡Ya era responsive!) --- */
+/* --- Grilla de Productos --- */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -275,19 +272,18 @@ td .delete-button {
     padding: 15px;
     border-top: 1px solid #eee;
     display: flex;
-    flex-direction: column; /* Apila botones en móvil */
+    flex-direction: column;
     gap: 10px;
 }
 
 @media (min-width: 400px) {
-    /* Si la tarjeta es un poco más ancha, pone los botones en línea */
     .product-card .product-actions {
         flex-direction: row;
     }
 }
 
 
-/* --- Estilos de la Tabla (Manejo con scroll horizontal) --- */
+/* --- Estilos de la Tabla --- */
 .list-section {
     overflow-x: auto; /* Permite scroll horizontal en la tabla */
 }
@@ -295,7 +291,7 @@ td .delete-button {
 .product-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 600px; /* Forza el scroll en pantallas pequeñas */
+    min-width: 600px; /* Fuerza el scroll en pantallas pequeñas */
 }
 
 .product-table th,
@@ -339,7 +335,6 @@ td .delete-button {
 }
 
 /*===ESTILOS DEL LOGIN===*/
-
 /* Contenedor centrado */
 .login-container {
     max-width: 420px;
