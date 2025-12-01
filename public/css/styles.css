@@ -141,6 +141,24 @@ h1, h2 {
     }
 }
 
+/* --- Estilos para el botón de Cerrar Sesión --- */
+#btn-logout {
+    background-color: #555; 
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Suaviza el cambio de color */
+}
+
+/* Efecto al pasar el cursor (Hover) en ROJO */
+#btn-logout:hover {
+    background-color: #dc3545;
+}
+
 .admin-container {
     display: grid;
     grid-template-columns: 1fr; 
