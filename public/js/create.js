@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    //Creacion de usuario
+     //Creacion de usuario
     let altaUser_container = document.getElementById('altaUsers-container')
 
     altaUser_container.addEventListener("submit", async (event) => {
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(response);
 
             if(response.ok){
-                console.log(response);
+                //console.log(response);
 
                 let result = await response.json();
                 await Swal.fire({
