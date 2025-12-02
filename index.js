@@ -5,6 +5,7 @@ import express from "express";
 import session from "express-session";
 import cors from "cors";
 import { __dirname, join } from "./src/utils/path.utils.js";
+import bcrypt from "bcrypt";
 
 // Configuración
 import environments from "./src/api/config/environments.js";
@@ -12,6 +13,7 @@ import environments from "./src/api/config/environments.js";
 // Routers
 import productsRouter from "./routes/products.routes.js";
 import viewsRouter from "./routes/views.routes.js";
+import userRoutes from "./routes/user.routes.js";
 
 // Middlewares
 import { addLocals } from "./src/api/middlewares/locals.middleware.js";
@@ -67,47 +69,7 @@ app.use("/products", productsRouter);
 app.use("/", viewsRouter);
 
 // Endpoint para la creación de usuarios
-app.post("/api/users", async (req, res) => {
-    try {
-        const { correo, contrasenia } = req.body;
-
-        if (!correo || !contrasenia) {
-            return res.status(400).json({
-                message: "Datos inválidos: faltan campos"
-            });
-        }
-
-        // --- Verificar si el usuario ya existe ---
-        const sqlCheck = "SELECT * FROM usuarios WHERE correo = ?";
-        const [existingUsers] = await connection.query(sqlCheck, [correo]);
-
-        // Si la consulta devuelve algún resultado, es que ya existe
-        if (existingUsers.length > 0) {
-            return res.status(409).json({ 
-                message: "El correo ya está registrado"
-            });
-        }
-
-        // --- Si no existe, procedemos a crear ---
-        const sqlInsert = `
-            INSERT INTO usuarios (correo, contrasenia)
-            VALUES (?, ?)
-        `;
-
-        await connection.query(sqlInsert, [correo, contrasenia]);
-
-        res.status(201).json({
-            message: "Usuario creado con éxito"
-        });
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            message: "Error interno al crear usuario",
-            error: error.message
-        });
-    }
-});
+app.use("/api/users", userRoutes);
 
 //Endpoint para login
 app.post("/login", async (req, res) => {
@@ -120,9 +82,14 @@ app.post("/login", async (req, res) => {
                 error: "Todos los campos son obligatorios"
             });
         }
-
+        /*
+        //Sentencia sin bcrypt
         const sql = `SELECT * FROM usuarios where correo = ? AND contrasenia = ?`;
         const [rows] = await connection.query(sql, [correo, contrasenia]);
+        */
+        //Sentencia con bcrypt
+        const sql = "SELECT * FROM usuarios where correo = ?"
+        const [rows] = await connection.query(sql, [correo]);
 
         if(rows.length === 0){
             return res.render("login", {
@@ -134,11 +101,22 @@ app.post("/login", async (req, res) => {
 
         const user = rows[0];
 
-        req.session.user = {
-            id: user.id,
-            correo: user.correo
+        const match = await bcrypt.compare(contrasenia, user.contrasenia);
+
+        if(match){
+            req.session.user = {
+                id: user.id,
+                correo: user.correo
+            }
+            res.redirect("/")
+
+        } else {
+            return res.render("login", {
+                title: "Login",
+                error: "Epa! Contraseña incorrecta"
+            });
         }
-        res.redirect("/")
+
 
     } catch(error){
         console.log(error)

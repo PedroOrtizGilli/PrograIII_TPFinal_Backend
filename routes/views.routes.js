@@ -25,7 +25,7 @@ router.get("/", requiereLogin, async (req, res) => {
     }
 });
 
-router.get("/cargar", (req, res) => {
+router.get("/cargar", requiereLogin, (req, res) => {
     
     res.render('cargar', {
         title: 'Cargar Producto'
