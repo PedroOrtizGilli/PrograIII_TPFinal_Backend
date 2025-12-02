@@ -159,6 +159,18 @@ h1, h2 {
     background-color: #dc3545;
 }
 
+#btn-logout:active {
+    transform: scale(0.98);
+}
+
+@media (min-width: 768px) {
+
+    #btn-logout {
+        width: auto; /* El botón se ajusta al texto */
+        padding: 8px 15px; /* Un poco más pequeño en desktop */
+    }
+}
+
 .admin-container {
     display: grid;
     grid-template-columns: 1fr; 
