@@ -15,11 +15,11 @@ import productsRouter from "./routes/products.routes.js";
 import viewsRouter from "./routes/views.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import salesRoutes from "./routes/sales.routes.js";
 
 // Middlewares
 import { addLocals } from "./src/api/middlewares/locals.middleware.js";
 import { loggerUrl } from "./src/api/middlewares/logger.middleware.js"; 
-import connection from "./src/api/database/db.js";
 
 /*====================
     Configuración Inicial
@@ -76,46 +76,7 @@ app.use("/api/users", userRoutes);
 app.use("/", authRoutes);
 
 //Endpoint para registrar ventas
-app.post("/api/sales", async (req, res) => {
-    try{
-        const { nombreUsuario, precioTotal, fechaEmision, productos } = req.body;
-
-        if(!nombreUsuario || !precioTotal || !fechaEmision || !Array.isArray(productos) || productos.length === 0){
-            return res.status(400).json({
-                message: "Datos inválidos: faltan campos o formato incorrecto"
-            });
-        }
-
-        const sql = `
-            INSERT INTO tickets (nombreUsuario, precioTotal, fechaEmision)
-            VALUES (?, ?, ?)    
-        `;
-
-        const [resultTicket] = await connection.query(sql, [nombreUsuario, precioTotal, fechaEmision]);
-
-        const ticketId = resultTicket.insertId;
-
-        const sqlProductoTickets = `
-            INSERT INTO productos_tickets (idProducto, idTicket) VALUES (?, ?)
-        `;
-
-        for (const idProducto of productos) {
-            await connection.query(sqlProductoTickets, [idProducto, ticketId]);
-        }
-
-        res.status(201).json({
-            message: "Venta registrada con éxito",
-            ticketId: ticketId
-        })
-
-    }catch(error){
-        console.log(error);
-        res.status(500).json({
-            message: "Error interno del servidor",
-            error: error.message
-        });
-    }
-});
+app.use("/api/sales", salesRoutes);
 
 
 /*==================
