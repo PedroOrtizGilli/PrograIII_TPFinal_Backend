@@ -66,37 +66,48 @@ app.use("/products", productsRouter);
 // Rutas de las Vistas
 app.use("/", viewsRouter);
 
-//Endpoint para la creacion de usuarios
-app.post("/api/users", async (req, res) =>  {
-    try{
+// Endpoint para la creación de usuarios
+app.post("/api/users", async (req, res) => {
+    try {
         const { correo, contrasenia } = req.body;
 
-        if(!correo || !contrasenia){
-            return res.status(500).json({
-                message: "Datos invalidos"
+        if (!correo || !contrasenia) {
+            return res.status(400).json({
+                message: "Datos inválidos: faltan campos"
             });
         }
 
-        let sql = `
+        // --- Verificar si el usuario ya existe ---
+        const sqlCheck = "SELECT * FROM usuarios WHERE correo = ?";
+        const [existingUsers] = await connection.query(sqlCheck, [correo]);
+
+        // Si la consulta devuelve algún resultado, es que ya existe
+        if (existingUsers.length > 0) {
+            return res.status(409).json({ 
+                message: "El correo ya está registrado"
+            });
+        }
+
+        // --- Si no existe, procedemos a crear ---
+        const sqlInsert = `
             INSERT INTO usuarios (correo, contrasenia)
             VALUES (?, ?)
         `;
 
-        const [rows] = await connection.query(sql, [correo, contrasenia]);
+        await connection.query(sqlInsert, [correo, contrasenia]);
 
         res.status(201).json({
-            message: "Usuario creado con exito"
+            message: "Usuario creado con éxito"
         });
 
-    }catch(error){
+    } catch (error) {
         console.error(error);
-
         res.status(500).json({
             message: "Error interno al crear usuario",
-            error: error
+            error: error.message
         });
     }
-})
+});
 
 //Endpoint para login
 app.post("/login", async (req, res) => {
